@@ -1,7 +1,7 @@
 <div class="csv__table d-flex justify-content-center flex-column">
   <div class="form-group flex-column">
     <label for="file">
-      <i class="fas fa-file-csv"></i> Upload your CSV file
+      Upload your CSV file
     </label>
     <input style="display: none;" type="file" id="file" [(ngModel)]="file" name="file" class="w-100"
       (change)="onFileSelected($event)" accept=".csv,.xls,.xlsx" />
