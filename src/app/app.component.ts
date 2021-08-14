@@ -13,15 +13,17 @@ export class AppComponent {
   workbook: any;
   name: string;
   extension: string;
+  showTable: boolean = false;
 
   constructor() {
   }
 
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
-    this.name = event.target.files[0].name;
-    this.extension = this.name.split('.')[1];
+    this.extension = this.selectedFile.name.split('.')[1];
     if (this.extension === 'xlsx' || this.extension === 'xls' || this.extension === 'csv') {
+      this.showTable = true;
+      this.name = this.selectedFile.name;
       const fileReader = new FileReader();
       fileReader.readAsBinaryString(this.selectedFile);
       fileReader.onload = (event: any) => {
@@ -30,6 +32,8 @@ export class AppComponent {
         this.sheetNames = this.workbook.SheetNames;
       }
     } else {
+      this.showTable = false;
+      this.name = null;
       alert('Please upload a .csv or .xls or .xlxs file');
     }
 
