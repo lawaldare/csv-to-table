@@ -1,1 +1,37 @@
-<p>static works!</p>
+<div class="csv__table d-flex justify-content-center flex-column">
+  <h2 class="text-left mb-4">Parse your Excel file into HTML Table</h2>
+  <div class="form-group flex-column">
+    <label for="file">
+      Upload an Excel file
+    </label>
+    <span class="name">{{ name}}</span>
+    <input style="display: none;" type="file" id="file" [(ngModel)]="file" name="file" class="w-100"
+      (change)="onFileSelected($event)" accept=".csv,.xls,.xlsx" />
+  </div>
+
+
+  <div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Organization Name</th>
+            <th scope="col">Country</th>
+            <th scope="col">Town / City</th>
+            <th scope="col">Type & Rating</th>
+            <th scope="col">Route</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of finalArray">
+            <td>{{ data.organization }}</td>
+            <td>{{ data.country }}</td>
+            <td>{{ data.town }}</td>
+            <td>{{ data.type }}</td>
+            <td>{{ data.route }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -21,7 +21,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    DynamicComponent
+    DynamicComponent,
+    StaticComponent
   ],
   imports: [
     BrowserModule,
