@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import * as XLXS from 'xlsx';
 import * as PAPA from 'papaparse'
+import { data } from '../../assets/db';
 
 @Component({
   selector: 'app-static',
@@ -17,7 +17,10 @@ export class StaticComponent implements OnInit {
   extension: string;
   showTable: boolean = false;
   finalArray: any[] = [];
+  listOfData: any[] = [];
   term: string = "tech";
+  searchValue = '';
+  visible = false;
   config = {
     delimiter: "",	// auto-detect
     newline: "",	// auto-detect
@@ -47,16 +50,26 @@ export class StaticComponent implements OnInit {
   }
 
   constructor() {
+
   }
 
-  ngOnInit() { }
-
-  search(event) {
-    this.finalArray = this.finalArray.filter(data => data.organization.includes(event));
+  ngOnInit() {
+    // if (JSON.parse(localStorage.getItem('__data__'))) {
+    //   this.finalArray = JSON.parse(localStorage.getItem('__data__'))
+    // } else {
+    //   this.finalArray = [];
+    // }
+    this.finalArray = data;
   }
+
+  // search(event) {
+  //   this.finalArray = this.finalArray.filter(data => data.organization.includes(event));
+  // }
 
   onFileSelected(event) {
     this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+
     let tempArray = []
     this.name = this.selectedFile.name;
     const fileReader = new FileReader();
@@ -70,23 +83,36 @@ export class StaticComponent implements OnInit {
         tempArray.push(output);
       }
 
-      if (this.term) {
-        this.finalArray = tempArray.filter(data => data.organization.includes(this.term));
-      } else {
-        this.finalArray = tempArray;
-      }
+      this.finalArray = [...tempArray];
+      this.listOfData = [...tempArray];
 
+      this.exportToJsonFile(this.finalArray);
     }
 
   }
 
-  covertSheetToJSON(sheet) {
-    return XLXS.utils.sheet_to_json(sheet);
+  exportToJsonFile(jsonData) {
+    let dataStr = JSON.stringify(jsonData);
+    let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+    let exportFileDefaultName = 'data.json';
+
+    let linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
   }
 
-  generateHeaders(object) {
-    return Object.keys(object)
+  reset(): void {
+    this.searchValue = '';
+    this.search();
   }
+
+  search(): void {
+    this.visible = false;
+    this.finalArray = this.listOfData.filter((item) => item.organization.toLowerCase().indexOf(this.searchValue) !== -1);
+  }
+
 
 
   transformArray(array) {

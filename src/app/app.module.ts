@@ -9,6 +9,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { StaticComponent } from './static/static.component';
 import { DynamicComponent } from './dynamic/dynamic.component';
 
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
+
+
+import en from '@angular/common/locales/en';
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+
+
+
+
+registerLocaleData(en);
+
+
+
+
 
 const routes: Routes = [
   { path: 'dynamic', component: DynamicComponent },
@@ -29,9 +48,12 @@ const routes: Routes = [
     FormsModule,
     TabsModule.forRoot(),
     RouterModule.forRoot(routes),
+    NzTableModule,
+    NzDropDownModule,
+    BrowserAnimationsModule
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
