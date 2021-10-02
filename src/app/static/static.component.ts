@@ -66,42 +66,42 @@ export class StaticComponent implements OnInit {
   //   this.finalArray = this.finalArray.filter(data => data.organization.includes(event));
   // }
 
-  onFileSelected(event) {
-    this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
+  // onFileSelected(event) {
+  //   this.selectedFile = event.target.files[0];
+  //   console.log(this.selectedFile);
 
-    let tempArray = []
-    this.name = this.selectedFile.name;
-    const fileReader = new FileReader();
-    fileReader.readAsBinaryString(this.selectedFile);
-    fileReader.onload = (event: any) => {
-      let binaryData = event.target.result;
-      let result = PAPA.parse(binaryData, this.config).data;
-      result.shift();
-      for (let data of result) {
-        let output = this.transformArray(data);
-        tempArray.push(output);
-      }
+  //   let tempArray = []
+  //   this.name = this.selectedFile.name;
+  //   const fileReader = new FileReader();
+  //   fileReader.readAsBinaryString(this.selectedFile);
+  //   fileReader.onload = (event: any) => {
+  //     let binaryData = event.target.result;
+  //     let result = PAPA.parse(binaryData, this.config).data;
+  //     result.shift();
+  //     for (let data of result) {
+  //       let output = this.transformArray(data);
+  //       tempArray.push(output);
+  //     }
 
-      this.finalArray = [...tempArray];
-      this.listOfData = [...tempArray];
+  //     this.finalArray = [...tempArray];
+  //     this.listOfData = [...tempArray];
 
-      this.exportToJsonFile(this.finalArray);
-    }
+  //     this.exportToJsonFile(this.finalArray);
+  //   }
 
-  }
+  // }
 
-  exportToJsonFile(jsonData) {
-    let dataStr = JSON.stringify(jsonData);
-    let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+  // exportToJsonFile(jsonData) {
+  //   let dataStr = JSON.stringify(jsonData);
+  //   let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
 
-    let exportFileDefaultName = 'data.json';
+  //   let exportFileDefaultName = 'data.json';
 
-    let linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
-    linkElement.click();
-  }
+  //   let linkElement = document.createElement('a');
+  //   linkElement.setAttribute('href', dataUri);
+  //   linkElement.setAttribute('download', exportFileDefaultName);
+  //   linkElement.click();
+  // }
 
   reset(): void {
     this.searchValue = '';
@@ -110,19 +110,19 @@ export class StaticComponent implements OnInit {
 
   search(): void {
     this.visible = false;
-    this.finalArray = this.listOfData.filter((item) => item.organization.toLowerCase().indexOf(this.searchValue) !== -1);
+    this.finalArray = data.filter((item) => item.organization.toLowerCase().indexOf(this.searchValue) !== -1);
   }
 
 
 
-  transformArray(array) {
-    return {
-      organization: array[0],
-      town: array[1],
-      country: array[2],
-      type: array[3],
-      route: array[4]
-    }
-  }
+  // transformArray(array) {
+  //   return {
+  //     organization: array[0],
+  //     town: array[1],
+  //     country: array[2],
+  //     type: array[3],
+  //     route: array[4]
+  //   }
+  // }
 
 }
